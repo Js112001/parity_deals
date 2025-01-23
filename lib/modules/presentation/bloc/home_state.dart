@@ -14,8 +14,9 @@ class LoadingState extends HomeState {
 
 class SuccessState extends HomeState {
   final List<DealEntity> deals;
+  final bool isPaginated;
 
-  SuccessState({required this.deals});
+  SuccessState({required this.deals, this.isPaginated = false});
 
   @override
   List<Object?> get props => [deals];

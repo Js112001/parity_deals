@@ -1,86 +1,58 @@
-import 'package:deals/core/di/injection_container.dart';
-import 'package:deals/modules/domain/repositories/deals_repository.dart';
 import 'package:deals/modules/presentation/bloc/home_bloc.dart';
+import 'package:deals/modules/presentation/views/default_tab_controller_listener.dart';
+import 'package:deals/modules/presentation/widgets/deals_listing_widget.dart';
+import 'package:deals/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({super.key, required this.title});
+  const HomeView({super.key, required this.title, required this.tabs});
 
   final String title;
+  final List<String> tabs;
 
   @override
   State<HomeView> createState() => _HomeViewState();
 }
 
 class _HomeViewState extends State<HomeView> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    BlocProvider.of<HomeBloc>(context).add(GetFeaturedDealsEvent(1));
-  }
-
-  void callApi() async {
-    final result = await sl<DealsRepository>().getFeaturedDeals();
-    Logger().i('Result: ${result.first.id}');
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            if (state is ErrorState) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "statusCode: ${state.statusCode} Error: ${state.message}",
-                    textAlign: TextAlign.center,
+    return DefaultTabController(
+      length: widget.tabs.length,
+      child: DefaultTabControllerListener(
+        onTabChanged: (value) {
+          BlocProvider.of<HomeBloc>(context).add(InitialEvent());
+          switch (value) {
+            case 0:
+              BlocProvider.of<HomeBloc>(context).add(GetTopDealsEvent(1));
+            case 1:
+              BlocProvider.of<HomeBloc>(context).add(GetPopularDealsEvent(1));
+            case 2:
+              BlocProvider.of<HomeBloc>(context).add(GetFeaturedDealsEvent(1));
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            bottom: TabBar(
+              tabs: widget.tabs
+                  .map(
+                    (tabName) => Tab(
+                      text: tabName,
+                    ),
                   )
-                ],
-              );
-            } else if (state is SuccessState) {
-              Logger().i('[Success]: ${state.deals.first.id}');
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Text(
-                    'You have pushed the button this many times:',
-                  ),
-                  Text(
-                    '$_counter',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ],
-              );
-            } else {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [CircularProgressIndicator()],
-              );
-            }
-          },
+                  .toList(),
+            ),
+            title: const Text('Deals'),
+          ),
+          body: TabBarView(
+            children: [
+              DealsListingWidget(dealType: DealTypes.top),
+              DealsListingWidget(dealType: DealTypes.popular),
+              DealsListingWidget(dealType: DealTypes.featured),
+            ],
+          ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ),
     );
   }

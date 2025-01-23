@@ -21,7 +21,10 @@ class App extends StatelessWidget {
             create: (context) => sl(),
           ),
         ],
-        child: const HomeView(title: 'Flutter Demo Home Page'),
+        child: const HomeView(
+          title: 'Flutter Demo Home Page',
+          tabs: ['Top', 'Popular', 'Featured'],
+        ),
       ),
     );
   }

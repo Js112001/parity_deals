@@ -2,6 +2,11 @@ part of 'home_bloc.dart';
 
 abstract class HomeEvent extends Equatable {}
 
+class InitialEvent extends HomeEvent {
+  @override
+  List<Object?> get props => [];
+}
+
 class GetTopDealsEvent extends HomeEvent {
   final int page;
 
@@ -28,4 +33,3 @@ class GetPopularDealsEvent extends HomeEvent {
   @override
   List<Object?> get props => [page];
 }
-
