@@ -1,9 +1,9 @@
 # Deals
 
-Flutter Version: 3.24.0 to 3.27.1
-State Management Used: Bloc
-Architecture: Clean
-Database: Hive (for offline storage)
+Flutter Version: <b>3.24.0 to 3.27.1</b><br/>
+State Management Used: <b>Bloc</b><br/>
+Architecture: <b>Clean</b><br/>
+Database: <b>Hive (for offline storage)</b><br/>
 
 ## Steps to run:
 
@@ -14,5 +14,7 @@ Step 4: ```flutter run``` / ```fvm flutter run```<br/>
 
 ## Demo
 
-https://github.com/user-attachments/assets/d58bc62f-0cd6-4b84-afc0-b6bbd1c4f1bd
+https://github.com/user-attachments/assets/0e2a4950-9e5b-4dfd-b16a-5755605189dc
+
+
 
