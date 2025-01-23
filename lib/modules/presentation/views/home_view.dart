@@ -2,6 +2,7 @@ import 'package:deals/core/di/injection_container.dart';
 import 'package:deals/core/network/network_service.dart';
 import 'package:deals/modules/presentation/bloc/home_bloc.dart';
 import 'package:deals/modules/presentation/views/default_tab_controller_listener.dart';
+import 'package:deals/modules/presentation/widgets/app_drawer.dart';
 import 'package:deals/modules/presentation/widgets/deals_listing_widget.dart';
 import 'package:deals/utils/enums.dart';
 import 'package:deals/utils/strings.dart';
@@ -57,6 +58,7 @@ class _HomeViewState extends State<HomeView> {
           }
         },
         child: Scaffold(
+          drawer: AppDrawer(),
           appBar: AppBar(
             bottom: TabBar(
               tabs: widget.tabs
