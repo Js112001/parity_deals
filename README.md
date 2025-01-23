@@ -1,16 +1,18 @@
-# deals
+# Deals
 
-A new Flutter project.
+Flutter Version: 3.24.0 to 3.27.1
+State Management Used: Bloc
+Architecture: Clean
+Database: Hive (for offline storage)
 
-## Getting Started
+## Steps to run:
 
-This project is a starting point for a Flutter application.
+Step 1: Choose one of versions above mentioned or use fvm (already set to 3.24.0)<br/>
+Step 2: Rename .env.example to .env and add DESIDIME_CLIENT_HEADER<br/>
+Step 3: Run ```flutter pub get``` / ```fvm flutter pub get```<br/>
+Step 4: ```flutter run``` / ```fvm flutter run```<br/>
 
-A few resources to get you started if this is your first Flutter project:
+## Demo
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+https://github.com/user-attachments/assets/d58bc62f-0cd6-4b84-afc0-b6bbd1c4f1bd
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
