@@ -11,14 +11,18 @@ class BaseNetwork {
 
   BaseNetwork(this._dio);
 
-  Future<StoreApiResponseModel?> get({required String url}) async {
-    CustomLogger.i('[url]: $url');
+  Future<StoreApiResponseModel?> get({
+    required String baseUrl,
+    required String endpoint,
+    required Map<String, dynamic> queryParameters,
+  }) async {
+    CustomLogger.i('[url]: $baseUrl/$endpoint');
     var headers = {'X-Desidime-Client': dotenv.env['DESIDIME_CLIENT_HEADER']};
     try {
-      var response = await _dio.request(
-        url,
+      var response = await _dio.get(
+        '$baseUrl/$endpoint',
+        queryParameters: queryParameters,
         options: Options(
-          method: 'GET',
           headers: headers,
         ),
       );
