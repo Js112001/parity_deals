@@ -2,15 +2,27 @@ import 'dart:convert';
 
 import 'package:deals/modules/data/models/deal_model.dart';
 import 'package:deals/modules/domain/entities/store_entity.dart';
+import 'package:hive/hive.dart';
 
+part 'generated/deal_entity.g.dart';
+
+@HiveType(typeId: 1)
 class DealEntity {
+  @HiveField(0)
   final int? id;
+  @HiveField(1)
   final int? commentsCount;
+  @HiveField(2)
   final DateTime? createdAt;
+  @HiveField(3)
   final int? createdAtInMillis;
+  @HiveField(4)
   final String? imageMedium;
+  @HiveField(5)
   final StoreEntity? store;
+  @HiveField(6)
   final int? statusCode;
+  @HiveField(7)
   final String? message;
 
   DealEntity({

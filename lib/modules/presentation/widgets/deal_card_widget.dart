@@ -34,7 +34,7 @@ class DealCardWidget extends StatelessWidget {
                   errorWidget: (context, url, error) {
                     return Icon(
                       Icons.warning,
-                      color: Colors.red,
+                      color: Theme.of(context).colorScheme.error,
                     );
                   },
                 ),

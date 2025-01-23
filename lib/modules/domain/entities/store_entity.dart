@@ -1,6 +1,12 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
+
+part 'generated/store_entity.g.dart';
+
+@HiveType(typeId: 2)
 class StoreEntity {
+  @HiveField(0)
   final String? name;
 
   StoreEntity({
