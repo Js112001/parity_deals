@@ -1,3 +1,4 @@
+import 'package:deals/core/di/injection_container.dart';
 import 'package:deals/core/network/network_service.dart';
 import 'package:deals/modules/presentation/bloc/home_bloc.dart';
 import 'package:deals/modules/presentation/views/default_tab_controller_listener.dart';
@@ -19,7 +20,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   void _checkConnectivity() async {
-    if (!await NetworkService.isConnected()) {
+    if (!await sl<NetworkService>().isConnected()) {
       _showNoConnectionSnackBar();
     }
   }

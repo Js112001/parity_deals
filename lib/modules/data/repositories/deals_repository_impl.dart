@@ -9,12 +9,17 @@ import 'package:deals/utils/enums.dart';
 class DealsRepoImpl extends DealsRepository {
   final DealsServiceProvider _dealsServiceProvider;
   final DatabaseServices _databaseServices;
+  final NetworkService _networkService;
 
-  DealsRepoImpl(this._dealsServiceProvider, this._databaseServices);
+  DealsRepoImpl(
+    this._dealsServiceProvider,
+    this._databaseServices,
+    this._networkService,
+  );
 
   @override
   Future<List<DealEntity>> getFeaturedDeals({int page = 1}) async {
-    if (await NetworkService.isConnected()) {
+    if (await _networkService.isConnected()) {
       final response = await _dealsServiceProvider.getFeaturedDeals(page: page);
       final deals = _formatResponse(response: response);
       _databaseServices.saveDeals(deals, DealTypes.featured);
@@ -30,7 +35,7 @@ class DealsRepoImpl extends DealsRepository {
 
   @override
   Future<List<DealEntity>> getPopularDeals({int page = 1}) async {
-    if (await NetworkService.isConnected()) {
+    if (await _networkService.isConnected()) {
       final response = await _dealsServiceProvider.getPopularDeals(page: page);
       final deals = _formatResponse(response: response);
       _databaseServices.saveDeals(deals, DealTypes.popular);
@@ -46,7 +51,7 @@ class DealsRepoImpl extends DealsRepository {
 
   @override
   Future<List<DealEntity>> getTopDeals({int page = 1}) async {
-    if (await NetworkService.isConnected()) {
+    if (await _networkService.isConnected()) {
       final response = await _dealsServiceProvider.getTopDeals(page: page);
       final deals = _formatResponse(response: response);
       _databaseServices.saveDeals(deals, DealTypes.top);

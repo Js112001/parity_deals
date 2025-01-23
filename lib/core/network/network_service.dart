@@ -1,8 +1,9 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:deals/core/di/injection_container.dart';
 
 class NetworkService {
-  static Future<bool> isConnected() async {
-    final connectivityResult = await Connectivity().checkConnectivity();
+  Future<bool> isConnected() async {
+    final connectivityResult = await sl<Connectivity>().checkConnectivity();
     return connectivityResult.first == ConnectivityResult.wifi ||
         connectivityResult.first == ConnectivityResult.ethernet ||
         connectivityResult.first == ConnectivityResult.mobile;
