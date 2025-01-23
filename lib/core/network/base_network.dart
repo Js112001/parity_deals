@@ -4,6 +4,7 @@ import 'package:deals/modules/data/models/store_api_response_model.dart';
 import 'package:deals/utils/custom_logger.dart';
 import 'package:deals/utils/strings.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BaseNetwork {
   final Dio _dio;
@@ -12,7 +13,7 @@ class BaseNetwork {
 
   Future<StoreApiResponseModel?> get({required String url}) async {
     CustomLogger.i('[url]: $url');
-    var headers = {'X-Desidime-Client': '08b4260e5585f282d1bd9d085e743fd9'};
+    var headers = {'X-Desidime-Client': dotenv.env['DESIDIME_CLIENT_HEADER']};
     try {
       var response = await _dio.request(
         url,
