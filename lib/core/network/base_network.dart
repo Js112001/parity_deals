@@ -1,6 +1,8 @@
+import 'dart:io';
 
 import 'package:deals/modules/data/models/store_api_response_model.dart';
 import 'package:deals/utils/custom_logger.dart';
+import 'package:deals/utils/strings.dart';
 import 'package:dio/dio.dart';
 
 class BaseNetwork {
@@ -20,7 +22,7 @@ class BaseNetwork {
         ),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == HttpStatus.ok) {
         return StoreApiResponseModel.fromJson(response.data);
       } else {
         return StoreApiResponseModel.fromJson({
@@ -32,48 +34,55 @@ class BaseNetwork {
       switch (error.type) {
         case DioExceptionType.badCertificate:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Bad Certificate Error',
+            "statusCode": error.response?.statusCode ?? HttpStatus.badGateway,
+            "message": error.message ?? StringConstants.badCertificateMessage,
           });
         case DioExceptionType.connectionTimeout:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Connection Timeout Error',
+            "statusCode": error.response?.statusCode ??
+                HttpStatus.networkConnectTimeoutError,
+            "message":
+                error.message ?? StringConstants.connectionTimeoutMessage,
           });
         case DioExceptionType.sendTimeout:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Send Timeout Error',
+            "statusCode":
+                error.response?.statusCode ?? HttpStatus.requestTimeout,
+            "message": error.message ?? StringConstants.sendTimeoutMessage,
           });
         case DioExceptionType.receiveTimeout:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Receive Timeout Error',
+            "statusCode":
+                error.response?.statusCode ?? HttpStatus.requestTimeout,
+            "message": error.message ?? StringConstants.receiveTimeoutMessage,
           });
         case DioExceptionType.badResponse:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Bad Response Error',
+            "statusCode": error.response?.statusCode ?? HttpStatus.badRequest,
+            "message": error.message ?? StringConstants.badResponseMessage,
           });
         case DioExceptionType.cancel:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Request Cancel Error',
+            "statusCode":
+                error.response?.statusCode ?? HttpStatus.internalServerError,
+            "message": error.message ?? StringConstants.cancelRequestMessage,
           });
         case DioExceptionType.connectionError:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Connection Error',
+            "statusCode": error.response?.statusCode ??
+                HttpStatus.connectionClosedWithoutResponse,
+            "message": error.message ?? StringConstants.connectionErrorMessage,
           });
         case DioExceptionType.unknown:
           return StoreApiResponseModel.fromJson({
-            "statusCode": error.response?.statusCode ?? 500,
-            "message": error.message ?? 'Unknown Error',
+            "statusCode":
+                error.response?.statusCode ?? HttpStatus.internalServerError,
+            "message": error.message ?? StringConstants.unknownErrorMessage,
           });
       }
     } catch (e) {
       return StoreApiResponseModel.fromJson({
-        "statusCode": 500,
+        "statusCode": HttpStatus.internalServerError,
         "message": "Internal Error",
       });
     }

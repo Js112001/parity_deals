@@ -44,6 +44,7 @@ dependencies:
   hive_flutter: ^1.1.0
   path_provider: ^2.1.5
   connectivity_plus: ^6.1.2
+  http_status: ^3.3.3
 
 dev_dependencies:
   flutter_test:
