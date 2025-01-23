@@ -28,6 +28,7 @@ class _DealsListingWidgetState extends State<DealsListingWidget> {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_scrollListener);
+    // deals = [];
     switch (widget.dealType) {
       case DealTypes.top:
         BlocProvider.of<HomeBloc>(context).add(GetTopDealsEvent(1));
@@ -42,6 +43,7 @@ class _DealsListingWidgetState extends State<DealsListingWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
+        CustomLogger.i('[State]: ${state.runtimeType}');
         if (state is ErrorState) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -53,7 +55,8 @@ class _DealsListingWidgetState extends State<DealsListingWidget> {
             ],
           );
         } else if (state is SuccessState) {
-          deals += state.deals;
+          deals = state.deals;
+          CustomLogger.i('[Deals]: ${deals.first.id}');
           return RefreshIndicator(
             onRefresh: () async {
               switch (widget.dealType) {
@@ -87,7 +90,6 @@ class _DealsListingWidgetState extends State<DealsListingWidget> {
             ),
           );
         } else {
-          deals = [];
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [CircularProgressIndicator()],

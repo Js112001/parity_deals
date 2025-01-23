@@ -19,7 +19,7 @@ class SuccessState extends HomeState {
   SuccessState({required this.deals, this.isPaginated = false});
 
   @override
-  List<Object?> get props => [deals];
+  List<Object?> get props => [deals, isPaginated];
 }
 
 class ErrorState extends HomeState {
